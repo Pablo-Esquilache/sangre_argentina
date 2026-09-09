@@ -1,62 +1,25 @@
 "use client";
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import imageCompression from 'browser-image-compression';
-import { supabase } from '../../lib/supabase';
 import styles from './admin.module.css';
+import { useRouter } from 'next/navigation';
 
-export default function AdminPage() {
-  // Auth states
-  const [session, setSession] = useState(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [authError, setAuthError] = useState('');
-  const [isRecovering, setIsRecovering] = useState(false);
-  const [recoveryMsg, setRecoveryMsg] = useState('');
-
-  // Form states
+export default function AdminDashboard() {
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
   const [isCompressing, setIsCompressing] = useState(false);
   const [optimizedImage, setOptimizedImage] = useState(null);
-
-  // Check auth session on load
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setAuthError('Credenciales incorrectas');
-  };
-
-  const handleRecovery = async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    setRecoveryMsg('');
-    if (!email) {
-      setAuthError('Por favor ingresa tu email primero');
-      return;
-    }
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) {
-      setAuthError('Error al enviar el correo. Verifica tu dirección.');
-    } else {
-      setRecoveryMsg('Revisa tu bandeja de entrada para restablecer tu contraseña.');
-    }
-  };
+  const [isUploading, setIsUploading] = useState(false);
+  const router = useRouter();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    router.push('/login');
+    router.refresh();
   };
 
   const handleImageChange = async (e) => {
@@ -66,7 +29,7 @@ export default function AdminPage() {
     setIsCompressing(true);
     try {
       const options = {
-        maxSizeMB: 0.5, // Máximo 500kb
+        maxSizeMB: 0.5, // Mximo 500kb
         maxWidthOrHeight: 1200,
         useWebWorker: true,
       };
@@ -79,8 +42,6 @@ export default function AdminPage() {
       setIsCompressing(false);
     }
   };
-
-  const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmitInterview = async (e) => {
     e.preventDefault();
@@ -105,7 +66,7 @@ export default function AdminPage() {
         throw new Error('Error subiendo la imagen: ' + uploadError.message);
       }
 
-      // 2. Obtener la URL pública de la imagen
+      // 2. Obtener la URL pblica de la imagen
       const { data: publicUrlData } = supabase.storage
         .from('portadas')
         .getPublicUrl(fileName);
@@ -129,7 +90,7 @@ export default function AdminPage() {
         throw new Error('Error guardando los datos en la base de datos: ' + insertError.message);
       }
 
-      alert('¡Entrevista publicada con éxito!');
+      alert('Entrevista publicada con Ǹxito!');
       
       // Limpiar el formulario
       setTitle('');
@@ -147,72 +108,23 @@ export default function AdminPage() {
     }
   };
 
-  if (!session) {
-    return (
-      <main className={`container ${styles.adminMain}`}>
-        <div className={styles.adminCard}>
-          <h2>Acceso Privado</h2>
-          <p>{isRecovering ? 'Ingresa tu email para recuperar' : 'Ingresa tus credenciales para entrar al panel'}</p>
-
-          <form className={styles.form} onSubmit={isRecovering ? handleRecovery : handleLogin}>
-            <div className={styles.formGroup}>
-              <input 
-                type="email" 
-                placeholder="Correo electrónico" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
-              />
-            </div>
-            
-            {!isRecovering && (
-              <div className={styles.formGroup}>
-                <input 
-                  type="password" 
-                  placeholder="Contraseña" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required 
-                />
-              </div>
-            )}
-            
-            {authError && <p className={styles.errorText}>{authError}</p>}
-            {recoveryMsg && <p style={{color: 'green', fontSize: '0.9rem', marginBottom: '10px'}}>{recoveryMsg}</p>}
-            
-            <button type="submit" className={styles.submitBtn}>
-              {isRecovering ? 'Enviar link de recuperación' : 'Ingresar'}
-            </button>
-          </form>
-
-          <button 
-            className={styles.toggleAuthBtn}
-            onClick={() => setIsRecovering(!isRecovering)}
-          >
-            {isRecovering ? 'Volver al login' : 'Olvidé mi contraseña'}
-          </button>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className={`container ${styles.adminMain}`}>
       <div className={styles.adminCard}>
         <div className={styles.adminHeader}>
-          <h2>Panel de Administración</h2>
-          <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesión</button>
+          <h2>Panel de Administracin</h2>
+          <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesin</button>
         </div>
         <p>Sube una nueva entrevista</p>
 
         <form className={styles.form} onSubmit={handleSubmitInterview}>
           <div className={styles.formGroup}>
-            <label htmlFor="title">Título</label>
+            <label htmlFor="title">Ttulo</label>
             <input type="text" id="title" value={title} onChange={e => setTitle(e.target.value)} placeholder="Ej: Especial Folklore Vivo" required />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="subtitle">Subtítulo</label>
+            <label htmlFor="subtitle">Subttulo</label>
             <input type="text" id="subtitle" value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="Ej: Con Los Nocheros" required />
           </div>
 
@@ -222,12 +134,12 @@ export default function AdminPage() {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="desc">Descripción detallada</label>
+            <label htmlFor="desc">Descripcin detallada</label>
             <textarea id="desc" rows="4" value={description} onChange={e => setDescription(e.target.value)} placeholder="Describe la entrevista..." required></textarea>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="image">Miniatura/portada {isCompressing && "(Optimizando... ⏳)"}</label>
+            <label htmlFor="image">Miniatura/portada {isCompressing && "(Optimizando... ?)"}</label>
             <input 
               type="file" 
               id="image" 
@@ -235,7 +147,7 @@ export default function AdminPage() {
               onChange={handleImageChange}
               required 
             />
-            {optimizedImage && <small style={{color: 'var(--primary)', marginTop: '5px'}}>✅ Imagen optimizada lista para subir.</small>}
+            {optimizedImage && <small style={{color: 'var(--primary)', marginTop: '5px'}}>o. Imagen optimizada lista para subir.</small>}
           </div>
 
           <button type="submit" className={styles.submitBtn} disabled={isCompressing || isUploading}>
