@@ -22,12 +22,6 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 1,
     },
-    {
-      url: `${baseUrl}/entrevistas`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
     ...entrevistasUrls,
   ];
 }

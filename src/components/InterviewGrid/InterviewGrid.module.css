@@ -1,0 +1,132 @@
+.gridWrapper {
+  flex-grow: 1;
+  overflow: hidden; 
+  position: relative;
+  background-color: var(--bg-darker);
+  border-radius: 12px;
+  padding: 15px 10px 15px 15px;
+  border: 1px solid var(--border-color);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gridScroll {
+  flex-grow: 1;
+  overflow-y: auto; 
+  padding-right: 15px; 
+}
+
+.gridScroll::-webkit-scrollbar {
+  width: 8px;
+}
+.gridScroll::-webkit-scrollbar-track {
+  background: var(--bg-dark); 
+  border-radius: 10px;
+}
+.gridScroll::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+  border-radius: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
+  padding-bottom: 15px;
+  align-content: start; 
+}
+
+.card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  border-color: var(--secondary);
+}
+
+.thumbnailContainer {
+  height: 120px;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  position: relative;
+}
+
+.thumbnailImage {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .thumbnailImage {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  padding: 10px 10px 8px 10px;
+}
+
+.cardContent h3 {
+  margin-bottom: 4px;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.cardContent p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0 5px;
+  gap: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.pageBtn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background-color: #4a2f26;
+}
+
+.pageBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,16 +4,17 @@ import { supabase } from '../../lib/supabase';
 import styles from './page.module.css';
 
 import RadioPlayer from '../../components/RadioPlayer/RadioPlayer';
+import InterviewGrid from '../../components/InterviewGrid/InterviewGrid';
 
 export const revalidate = 60; // Refrescar caché cada 60 segundos (ISR)
 
 export default async function Home() {
-  // Traer máximo 6 entrevistas reales de Supabase (solo los campos necesarios para la card)
+  // Traer exactamente 12 entrevistas iniciales
   const { data: entrevistas, error } = await supabase
     .from('entrevistas')
     .select('id, title, subtitle, image_url')
     .order('created_at', { ascending: false })
-    .limit(6);
+    .limit(12);
 
   const entrevistasList = entrevistas || [];
 
@@ -93,47 +94,8 @@ export default async function Home() {
         </div>
         <div className={styles.entrevistasContainer}>
           
-          <div className={styles.gridWrapper}>
-            <div className={styles.gridScroll}>
-              <div className={styles.grid}>
-                
-                {entrevistasList.length === 0 ? (
-                  <p style={{color: 'white', textAlign: 'center', gridColumn: '1 / -1', padding: '40px'}}>
-                    Aún no hay entrevistas publicadas.
-                  </p>
-                ) : (
-                  entrevistasList.map((interview) => (
-                    <Link href={`/entrevistas/${interview.id}`} key={interview.id} className={styles.card}>
-                      <div className={styles.thumbnailContainer} style={{ position: 'relative' }}>
-                        <Image 
-                          src={interview.image_url} 
-                          alt={`Portada de entrevista a ${interview.title}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className={styles.thumbnailImage}
-                        />
-                      </div>
-                      <div className={styles.cardContent}>
-                        <h3>{interview.title}</h3>
-                        <p>{interview.subtitle}</p>
-                      </div>
-                    </Link>
-                  ))
-                )}
-                
-              </div>
-            </div>
-            
-            {/* Si hay 6, es muy probable que haya más en la base de datos, mostramos botón */}
-            {entrevistasList.length === 6 && (
-              <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                <Link href="/entrevistas" className={styles.loadMoreBtn}>
-                  Ver más entrevistas
-                </Link>
-              </div>
-            )}
-            
-          </div>
+          <InterviewGrid initialInterviews={entrevistasList} />
+          
         </div>
       </section>
 
