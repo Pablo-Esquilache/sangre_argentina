@@ -6,11 +6,12 @@ import styles from './page.module.css';
 export const revalidate = 0; // Refrescar siempre los datos nuevos
 
 export default async function Home() {
-  // Traer las entrevistas reales de Supabase
+  // Traer máximo 12 entrevistas reales de Supabase
   const { data: entrevistas, error } = await supabase
     .from('entrevistas')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .limit(12);
 
   const entrevistasList = entrevistas || [];
 
@@ -123,6 +124,16 @@ export default async function Home() {
                 
               </div>
             </div>
+            
+            {/* Si hay 12, es muy probable que haya más en la base de datos, mostramos botón */}
+            {entrevistasList.length === 12 && (
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <Link href="/entrevistas" className={styles.loadMoreBtn}>
+                  Ver más entrevistas
+                </Link>
+              </div>
+            )}
+            
           </div>
         </div>
       </section>
