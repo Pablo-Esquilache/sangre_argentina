@@ -57,13 +57,25 @@ export default function RadioPlayer() {
       {/* Capa Frontal: Interfaz transparente flotante */}
       <div className={styles.uiOverlay}>
         <div className={styles.playerHeader}>
-          <div className={styles.liveBadge}>
-            <span className={`${styles.dot} ${isPlaying ? styles.pulse : ''}`}></span>
-            EN VIVO
+          <div className={`${styles.liveBadge} ${error ? styles.offlineBadge : ''}`}>
+            <span className={`${styles.dot} ${error ? styles.dotOffline : (isPlaying ? styles.pulse : '')}`}></span>
+            {error ? 'OFFLINE' : 'EN VIVO'}
           </div>
         </div>
 
         <div className={styles.playerControls}>
+          <button onClick={togglePlay} className={styles.playBtn} aria-label={isPlaying ? "Pausar" : "Reproducir"} disabled={error}>
+            {isPlaying ? (
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="currentColor" style={{marginLeft: '4px'}}>
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            )}
+          </button>
           <div className={styles.volumeContainer}>
             <input 
               type="range" 
@@ -76,28 +88,19 @@ export default function RadioPlayer() {
               aria-label="Volumen"
             />
           </div>
-          <button onClick={togglePlay} className={styles.playBtn} aria-label={isPlaying ? "Pausar" : "Reproducir"}>
-            {isPlaying ? (
-              <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor">
-                <rect x="6" y="4" width="4" height="16"></rect>
-                <rect x="14" y="4" width="4" height="16"></rect>
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor" style={{marginLeft: '4px'}}>
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            )}
-          </button>
         </div>
-        
-        {error && (
-          <div className={styles.errorMsg}>
-            Error al conectar.<br/>Intenta más tarde.
-          </div>
-        )}
       </div>
 
-      <audio ref={audioRef} preload="none">
+      <audio 
+        ref={audioRef} 
+        preload="metadata" 
+        onError={() => {
+          console.log("Audio connection error detected");
+          setError(true);
+          setIsPlaying(false);
+        }} 
+        onCanPlay={() => setError(false)}
+      >
         <source src={streamUrl} type="audio/mpeg" />
       </audio>
     </div>

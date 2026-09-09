@@ -78,7 +78,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 20px;
+  padding: 30px 0 0 0; /* Only top padding */
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -101,6 +101,12 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 77, 77, 0.3);
+  transition: all 0.3s ease;
+}
+
+.offlineBadge {
+  color: #aaa;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .dot {
@@ -109,6 +115,11 @@
   background-color: #ff4d4d;
   border-radius: 50%;
   display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.dotOffline {
+  background-color: #aaa;
 }
 
 .pulse {
@@ -123,18 +134,19 @@
 
 .playerControls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Horizontal bar */
+  justify-content: center;
   align-items: center;
   gap: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 20px;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Solid transparent black */
+  padding: 12px 20px; /* Slimmer height */
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .volumeContainer {
-  width: 130px;
+  width: 150px;
   display: flex;
   align-items: center;
 }
@@ -164,8 +176,8 @@
 }
 
 .playBtn {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: var(--primary);
   color: white;
@@ -174,24 +186,19 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 5px 20px rgba(249, 168, 37, 0.5);
-  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 15px rgba(249, 168, 37, 0.4);
+  transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
 }
 
-.playBtn:hover {
+.playBtn:hover:not(:disabled) {
   transform: scale(1.05);
   background-color: #d8901b;
 }
 
-.errorMsg {
-  position: absolute;
-  bottom: 10px;
-  color: #ff4d4d;
-  font-size: 0.8rem;
-  text-align: center;
-  background: rgba(0,0,0,0.8);
-  padding: 5px 10px;
-  border-radius: 8px;
+.playBtn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* MOBILE RESPONSIVE */
@@ -201,7 +208,6 @@
   }
   
   .fretboard {
-    /* Rotated neck for mobile */
     background: linear-gradient(to bottom, #2d1810, #4a2e1b, #4a2e1b, #2d1810);
     align-items: center;
   }
@@ -250,13 +256,23 @@
 
   .uiOverlay {
     flex-direction: row;
-    padding: 10px 15px;
+    padding: 0;
   }
   
+  .playerHeader {
+    width: auto;
+    padding-left: 15px;
+  }
+
   .playerControls {
+    width: auto;
     flex-direction: row;
-    padding: 5px 10px;
-    gap: 10px;
+    padding: 0 15px 0 15px;
+    background: none;
+    border-top: none;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
   }
   
   .volumeContainer {
@@ -264,8 +280,8 @@
   }
   
   .playBtn {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
   }
   
   .liveBadge {
