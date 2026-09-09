@@ -1,64 +1,106 @@
 .playerContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #1a1a1a, #111);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  border: 1px solid #333;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.banner {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.banner h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.banner p {
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-}
-
-.playerContainer {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-dark);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid var(--border-color);
+  background-color: #1a0f0a; /* Fallback */
+}
+
+/* FRETBOARD BACKGROUND */
+.fretboard {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, #2d1810, #4a2e1b, #4a2e1b, #2d1810);
+  display: flex;
+  justify-content: center;
+}
+
+.frets {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 60px,
+    #9e9e9e 60px,
+    #e0e0e0 62px,
+    #757575 63px,
+    transparent 63px
+  );
+  opacity: 0.9;
+}
+
+.stringsContainer {
+  position: relative;
+  height: 100%;
+  width: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.string {
+  height: 100%;
+  transform-origin: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  transition: opacity 0.2s;
+}
+
+.bass {
+  width: 4.5px;
+  background: linear-gradient(to right, #757575, #e0e0e0, #757575);
+}
+
+.treble {
+  width: 2.5px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.vibrate {
+  animation: strum-vertical 0.1s infinite alternate ease-in-out;
+}
+
+@keyframes strum-vertical {
+  0% { transform: scaleX(1) translateX(0px); opacity: 1; }
+  100% { transform: scaleX(2) translateX(1.5px); opacity: 0.7; }
+}
+
+/* UI OVERLAY */
+.uiOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  padding: 30px 20px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .playerHeader {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  justify-content: center;
 }
 
 .liveBadge {
-  background-color: rgba(255, 77, 77, 0.15);
+  background-color: rgba(0, 0, 0, 0.6);
   color: #ff4d4d;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: bold;
   display: flex;
   align-items: center;
-  gap: 6px;
-  letter-spacing: 1px;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 77, 77, 0.3);
 }
 
 .dot {
@@ -79,60 +121,20 @@
   100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
 }
 
-.stationName {
-  color: var(--primary);
-  font-size: 1.1rem;
-  margin: 0;
-  text-align: center;
-}
-
-.playerBody {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.stringsContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 120px;
-}
-
-.string {
-  width: 3px;
-  height: 100%;
-  background-color: var(--primary);
-  border-radius: 3px;
-  transform-origin: center;
-  transition: all 0.2s;
-}
-
-.vibrate {
-  animation: strum-vertical 0.3s infinite alternate ease-in-out;
-}
-
-@keyframes strum-vertical {
-  0% { transform: scaleX(1); opacity: 1; }
-  100% { transform: scaleX(3.5); opacity: 0.6; }
-}
-
 .playerControls {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .volumeContainer {
-  width: 100%;
-  max-width: 130px;
+  width: 130px;
   display: flex;
   align-items: center;
 }
@@ -147,23 +149,23 @@
 .volumeSlider::-webkit-slider-runnable-track {
   width: 100%;
   height: 4px;
-  background: #ccc;
+  background: rgba(255,255,255,0.3);
   border-radius: 2px;
 }
 .volumeSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--primary);
   border-radius: 50%;
   cursor: pointer;
-  margin-top: -5px;
+  margin-top: -6px;
 }
 
 .playBtn {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: var(--primary);
   color: white;
@@ -172,7 +174,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(249, 168, 37, 0.4);
+  box-shadow: 0 5px 20px rgba(249, 168, 37, 0.5);
   transition: transform 0.2s, background-color 0.2s;
 }
 
@@ -182,101 +184,92 @@
 }
 
 .errorMsg {
+  position: absolute;
+  bottom: 10px;
   color: #ff4d4d;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   text-align: center;
-  margin-top: 10px;
-  line-height: 1.3;
+  background: rgba(0,0,0,0.8);
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
   .playerContainer {
-    flex-direction: row;
-    padding: 10px 15px;
-  }
-
-  .playerHeader {
-    width: auto;
-    align-items: flex-start;
+    border-radius: 12px;
   }
   
-  .stationName {
-    font-size: 0.95rem;
-    text-align: left;
+  .fretboard {
+    /* Rotated neck for mobile */
+    background: linear-gradient(to bottom, #2d1810, #4a2e1b, #4a2e1b, #2d1810);
+    align-items: center;
   }
-
-  .liveBadge {
-    padding: 2px 6px;
-    font-size: 0.65rem;
+  
+  .frets {
+    background: repeating-linear-gradient(
+      to right,
+      transparent,
+      transparent 50px,
+      #9e9e9e 50px,
+      #e0e0e0 52px,
+      #757575 53px,
+      transparent 53px
+    );
   }
-
-  .playerBody {
-    flex-grow: 1;
-    justify-content: center;
-    margin: 0 15px;
-  }
-
+  
   .stringsContainer {
     flex-direction: column;
-    height: auto;
-    width: 60px;
-    gap: 6px;
+    height: 60px;
+    width: 100%;
   }
-
+  
   .string {
     width: 100%;
-    height: 3px;
+  }
+  
+  .bass {
+    height: 3.5px;
+    width: 100%;
+    background: linear-gradient(to bottom, #757575, #e0e0e0, #757575);
+  }
+  
+  .treble {
+    height: 2px;
+    width: 100%;
   }
 
   .vibrate {
-    animation: strum-horizontal 0.3s infinite alternate ease-in-out;
+    animation: strum-horizontal 0.1s infinite alternate ease-in-out;
   }
 
   @keyframes strum-horizontal {
-    0% { transform: scaleY(1); opacity: 1; }
-    100% { transform: scaleY(3.5); opacity: 0.6; }
+    0% { transform: scaleY(1) translateY(0px); opacity: 1; }
+    100% { transform: scaleY(2) translateY(1.5px); opacity: 0.7; }
   }
 
-  .playerControls {
-    width: auto;
+  .uiOverlay {
     flex-direction: row;
-    gap: 10px;
-    margin-top: 0;
+    padding: 10px 15px;
   }
-
+  
+  .playerControls {
+    flex-direction: row;
+    padding: 5px 10px;
+    gap: 10px;
+  }
+  
   .volumeContainer {
     display: none;
   }
-
+  
   .playBtn {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
   }
-}
-
-.placeholder {
-  text-align: center;
-}
-
-.iframeWrapper {
-  width: 100%;
-  height: 200px;
-  background-color: #000;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.hint {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 10px;
-}
-
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.6; }
-  100% { opacity: 1; }
+  
+  .liveBadge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
 }

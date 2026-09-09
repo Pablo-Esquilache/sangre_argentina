@@ -40,58 +40,62 @@ export default function RadioPlayer() {
 
   return (
     <div className={styles.playerContainer}>
-      <div className={styles.playerHeader}>
-        <div className={styles.liveBadge}>
-          <span className={`${styles.dot} ${isPlaying ? styles.pulse : ''}`}></span>
-          EN VIVO
-        </div>
-        <h3 className={styles.stationName}>FM 92.3</h3>
-      </div>
       
-      <div className={styles.playerBody}>
+      {/* Fondo: Mástil de guitarra (Fretboard) */}
+      <div className={styles.fretboard}>
+        <div className={styles.frets}></div>
         <div className={styles.stringsContainer}>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <div 
-              key={i} 
-              className={`${styles.string} ${isPlaying ? styles.vibrate : ''}`} 
-              style={{ animationDelay: `${i * 0.15}s` }}
-            ></div>
-          ))}
+          <div className={`${styles.string} ${styles.bass} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.0s' }}></div>
+          <div className={`${styles.string} ${styles.bass} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.1s' }}></div>
+          <div className={`${styles.string} ${styles.bass} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.2s' }}></div>
+          <div className={`${styles.string} ${styles.treble} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.3s' }}></div>
+          <div className={`${styles.string} ${styles.treble} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.4s' }}></div>
+          <div className={`${styles.string} ${styles.treble} ${isPlaying ? styles.vibrate : ''}`} style={{ animationDelay: '0.5s' }}></div>
         </div>
       </div>
 
-      <div className={styles.playerControls}>
-        <div className={styles.volumeContainer}>
-          <input 
-            type="range" 
-            min="0" 
-            max="1" 
-            step="0.01" 
-            value={volume} 
-            onChange={handleVolumeChange} 
-            className={styles.volumeSlider}
-            aria-label="Volumen"
-          />
+      {/* Capa Frontal: Interfaz transparente flotante */}
+      <div className={styles.uiOverlay}>
+        <div className={styles.playerHeader}>
+          <div className={styles.liveBadge}>
+            <span className={`${styles.dot} ${isPlaying ? styles.pulse : ''}`}></span>
+            EN VIVO
+          </div>
         </div>
-        <button onClick={togglePlay} className={styles.playBtn} aria-label={isPlaying ? "Pausar" : "Reproducir"}>
-          {isPlaying ? (
-            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor" style={{marginLeft: '4px'}}>
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          )}
-        </button>
-      </div>
 
-      {error && (
-        <div className={styles.errorMsg}>
-          Error al conectar.<br/>Intenta más tarde.
+        <div className={styles.playerControls}>
+          <div className={styles.volumeContainer}>
+            <input 
+              type="range" 
+              min="0" 
+              max="1" 
+              step="0.01" 
+              value={volume} 
+              onChange={handleVolumeChange} 
+              className={styles.volumeSlider}
+              aria-label="Volumen"
+            />
+          </div>
+          <button onClick={togglePlay} className={styles.playBtn} aria-label={isPlaying ? "Pausar" : "Reproducir"}>
+            {isPlaying ? (
+              <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="currentColor" style={{marginLeft: '4px'}}>
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            )}
+          </button>
         </div>
-      )}
+        
+        {error && (
+          <div className={styles.errorMsg}>
+            Error al conectar.<br/>Intenta más tarde.
+          </div>
+        )}
+      </div>
 
       <audio ref={audioRef} preload="none">
         <source src={streamUrl} type="audio/mpeg" />
