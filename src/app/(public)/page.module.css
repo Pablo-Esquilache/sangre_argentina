@@ -212,18 +212,26 @@
   border-color: var(--secondary);
 }
 
-.thumbnailPlaceholder {
-  height: 90px; /* Aún más bajito para ganar espacio vertical */
+.thumbnailContainer {
+  height: 90px;
+  width: 100%;
+  overflow: hidden;
   background-color: var(--bg-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 1rem;
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .thumbnailImage {
+  transform: scale(1.05);
 }
 
 .cardContent {
-  padding: 10px 10px 8px 10px; /* Reducido el padding inferior de la tarjeta */
+  padding: 10px 10px 8px 10px;
 }
 
 .cardContent h3 {

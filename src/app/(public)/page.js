@@ -1,15 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { supabase } from '../../lib/supabase';
 import styles from './page.module.css';
 
-// Mock data para entrevistas. Generamos 12 para que se vea bien el scroll en la grilla 3x3.
-const mockInterviews = Array(12).fill(null).map((_, i) => ({
-  id: i + 1,
-  title: `Entrevista Especial #${i + 1}`,
-  description: 'Descripción breve de la entrevista y el invitado de hoy.',
-}));
+export const revalidate = 0; // Refrescar siempre los datos nuevos
 
-export default function Home() {
+export default async function Home() {
+  // Traer las entrevistas reales de Supabase
+  const { data: entrevistas, error } = await supabase
+    .from('entrevistas')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  const entrevistasList = entrevistas || [];
+
   return (
     <main className={styles.main}>
       
@@ -94,17 +98,29 @@ export default function Home() {
           <div className={styles.gridWrapper}>
             <div className={styles.gridScroll}>
               <div className={styles.grid}>
-                {mockInterviews.map((interview) => (
-                  <Link href={`/entrevistas/${interview.id}`} key={interview.id} className={styles.card}>
-                    <div className={styles.thumbnailPlaceholder}>
-                      Miniatura {interview.id}
-                    </div>
-                    <div className={styles.cardContent}>
-                      <h3>{interview.title}</h3>
-                      <p>{interview.description}</p>
-                    </div>
-                  </Link>
-                ))}
+                
+                {entrevistasList.length === 0 ? (
+                  <p style={{color: 'white', textAlign: 'center', gridColumn: '1 / -1', padding: '40px'}}>
+                    Aún no hay entrevistas publicadas.
+                  </p>
+                ) : (
+                  entrevistasList.map((interview) => (
+                    <Link href={`/entrevistas/${interview.id}`} key={interview.id} className={styles.card}>
+                      <div className={styles.thumbnailContainer}>
+                        <img 
+                          src={interview.image_url} 
+                          alt={interview.title}
+                          className={styles.thumbnailImage}
+                        />
+                      </div>
+                      <div className={styles.cardContent}>
+                        <h3>{interview.title}</h3>
+                        <p>{interview.subtitle}</p>
+                      </div>
+                    </Link>
+                  ))
+                )}
+                
               </div>
             </div>
           </div>
