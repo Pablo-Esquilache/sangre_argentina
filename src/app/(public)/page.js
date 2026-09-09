@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { supabase } from '../../lib/supabase';
 import styles from './page.module.css';
 
+import RadioPlayer from '../../components/RadioPlayer/RadioPlayer';
+
 export const revalidate = 0; // Refrescar siempre los datos nuevos
 
 export default async function Home() {
@@ -23,12 +25,7 @@ export default async function Home() {
         <div className={styles.portadaContainer}>
           {/* Izquierda (20%): Iframe Radio */}
           <div className={styles.radioWrapper}>
-            <iframe 
-              src="https://carlostejedor.gob.ar/radiomunicipal/" 
-              className={styles.radioIframe}
-              title="Radio Municipal en Vivo"
-              allowFullScreen
-            ></iframe>
+            <RadioPlayer />
           </div>
           
           {/* Derecha (80%): Banner */}

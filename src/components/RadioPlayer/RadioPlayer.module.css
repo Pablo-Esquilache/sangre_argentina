@@ -29,15 +29,131 @@
   margin-bottom: 15px;
 }
 
-.liveIndicator {
+.playerContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.playerHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.liveBadge {
+  background-color: rgba(255, 77, 77, 0.15);
+  color: #ff4d4d;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff4d4d;
+  border-radius: 50%;
   display: inline-block;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 77, 77, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
+
+.stationName {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin: 0;
+  text-align: center;
+}
+
+.playerBody {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artwork {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spin {
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.playerControls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.playBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   background-color: var(--primary);
   color: white;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  animation: pulse 2s infinite;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(249, 168, 37, 0.4);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.playBtn:hover {
+  transform: scale(1.05);
+  background-color: #d8901b;
+}
+
+.errorMsg {
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.3;
+}
+
+.placeholder {
+  text-align: center;
 }
 
 .iframeWrapper {
@@ -49,10 +165,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-.placeholder {
-  text-align: center;
 }
 
 .hint {
