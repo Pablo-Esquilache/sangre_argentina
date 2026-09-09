@@ -5,13 +5,13 @@ import styles from './page.module.css';
 
 import RadioPlayer from '../../components/RadioPlayer/RadioPlayer';
 
-export const revalidate = 0; // Refrescar siempre los datos nuevos
+export const revalidate = 60; // Refrescar caché cada 60 segundos (ISR)
 
 export default async function Home() {
-  // Traer máximo 12 entrevistas reales de Supabase
+  // Traer máximo 12 entrevistas reales de Supabase (solo los campos necesarios para la card)
   const { data: entrevistas, error } = await supabase
     .from('entrevistas')
-    .select('*')
+    .select('id, title, subtitle, image_url')
     .order('created_at', { ascending: false })
     .limit(12);
 
@@ -104,10 +104,12 @@ export default async function Home() {
                 ) : (
                   entrevistasList.map((interview) => (
                     <Link href={`/entrevistas/${interview.id}`} key={interview.id} className={styles.card}>
-                      <div className={styles.thumbnailContainer}>
-                        <img 
+                      <div className={styles.thumbnailContainer} style={{ position: 'relative' }}>
+                        <Image 
                           src={interview.image_url} 
-                          alt={interview.title}
+                          alt={`Portada de entrevista a ${interview.title}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className={styles.thumbnailImage}
                         />
                       </div>

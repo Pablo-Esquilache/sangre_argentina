@@ -11,7 +11,41 @@ const getYouTubeEmbedUrl = (url) => {
   return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
 };
 
-export const revalidate = 0;
+export const revalidate = 60;
+
+export async function generateMetadata({ params }) {
+  const { data: interview } = await supabase
+    .from('entrevistas')
+    .select('title, description, image_url')
+    .eq('id', params.id)
+    .single();
+
+  if (!interview) return {};
+
+  return {
+    title: `${interview.title} | Sangre Argentina`,
+    description: interview.description?.substring(0, 160) + '...',
+    openGraph: {
+      title: `${interview.title} | Entrevista exclusiva`,
+      description: interview.description?.substring(0, 160) + '...',
+      images: [
+        {
+          url: interview.image_url,
+          width: 1200,
+          height: 630,
+          alt: `Portada de ${interview.title}`,
+        }
+      ],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${interview.title} | Sangre Argentina`,
+      description: interview.description?.substring(0, 160) + '...',
+      images: [interview.image_url],
+    }
+  };
+}
 
 export default async function InterviewDetail({ params }) {
   const { id } = params;
