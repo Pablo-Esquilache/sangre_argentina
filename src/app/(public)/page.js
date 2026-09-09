@@ -9,12 +9,12 @@ import InterviewGrid from '../../components/InterviewGrid/InterviewGrid';
 export const revalidate = 60; // Refrescar caché cada 60 segundos (ISR)
 
 export default async function Home() {
-  // Traer exactamente 12 entrevistas iniciales
+  // Traer exactamente 9 entrevistas iniciales
   const { data: entrevistas, error } = await supabase
     .from('entrevistas')
     .select('id, title, subtitle, image_url')
     .order('created_at', { ascending: false })
-    .limit(12);
+    .limit(9);
 
   const entrevistasList = entrevistas || [];
 

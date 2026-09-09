@@ -12,7 +12,7 @@ export default function InterviewGrid({ initialInterviews }) {
   const [hasMore, setHasMore] = useState(true);
   
   const scrollRef = useRef(null);
-  const itemsPerPage = 12;
+  const itemsPerPage = 9;
 
   const fetchInterviews = async (pageNumber) => {
     setIsLoading(true);
