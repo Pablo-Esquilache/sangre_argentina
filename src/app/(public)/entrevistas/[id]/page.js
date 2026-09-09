@@ -25,6 +25,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${interview.title} | Sangre Argentina`,
     description: interview.description?.substring(0, 160) + '...',
+    alternates: {
+      canonical: `/entrevistas/${params.id}`,
+    },
     openGraph: {
       title: `${interview.title} | Entrevista exclusiva`,
       description: interview.description?.substring(0, 160) + '...',
@@ -70,8 +73,35 @@ export default async function InterviewDetail({ params }) {
 
   const embedUrl = getYouTubeEmbedUrl(interview.youtube_url);
 
+  // Marcado de datos estructurados (JSON-LD) para Google
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RadioEpisode',
+    name: interview.title,
+    description: interview.description,
+    image: interview.image_url,
+    url: `https://sangre-argentina.netlify.app/entrevistas/${interview.id}`,
+    datePublished: interview.created_at,
+    author: {
+      '@type': 'Person',
+      name: 'Rodrigo Migueles'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Sangre Argentina',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://sangre-argentina.netlify.app/logo.png'
+      }
+    }
+  };
+
   return (
     <main className={`container ${styles.interviewMain}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className={styles.headerRow}>
         <h1>{interview.title}</h1>
       </div>

@@ -15,6 +15,9 @@ export const metadata = {
   metadataBase: new URL('https://sangre-argentina.netlify.app'),
   title: 'Sangre Argentina | Radio Folclore Nacional',
   description: 'Escucha Sangre Argentina en vivo. El mejor Folclore Nacional, Tango y Cultura con la conducción de Rodrigo Migueles. Lunes a Viernes de 19:00 a 21:00 hs por AM 1250 y FM 98.7.',
+  alternates: {
+    canonical: '/',
+  },
   keywords: ['Folclore', 'Radio en vivo', 'Tango', 'Cultura Argentina', 'Rodrigo Migueles', 'AM 1250', 'FM 98.7', 'Música Argentina', 'Sangre Argentina'],
   authors: [{ name: 'Rodrigo Migueles' }],
   creator: 'Rodrigo Migueles',
