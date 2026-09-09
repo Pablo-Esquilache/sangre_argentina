@@ -26,7 +26,7 @@ export default function Navbar() {
         
         <div className={styles.leftSection}>
           <Link href="/#inicio" className={styles.logoLink} onClick={closeMenu}>
-            <Image src="/logo.jpg" alt="Logo Sangre Argentina" width={55} height={55} className={styles.logoImg} />
+            <Image src="/logo.png" alt="Logo Sangre Argentina" width={55} height={55} className={styles.logoImg} />
           </Link>
           <div className={styles.search}>
             <input type="text" placeholder="Buscar entrevistas..." />
