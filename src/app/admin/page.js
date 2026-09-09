@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-client';
 import imageCompression from 'browser-image-compression';
 import styles from './admin.module.css';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
+  const supabase = createClient();
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [url, setUrl] = useState('');
