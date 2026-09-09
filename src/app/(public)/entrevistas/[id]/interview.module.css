@@ -54,7 +54,7 @@
 .description {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: #ddd;
+  color: var(--text-main);
 }
 
 @media (max-width: 768px) {

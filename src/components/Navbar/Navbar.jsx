@@ -50,7 +50,7 @@ export default function Navbar() {
 
             <ul className={`${styles.navLinks} ${isOpen ? styles.open : ''}`}>
               <li><Link href="/#inicio" onClick={closeMenu}>Inicio</Link></li>
-              <li><Link href="/#quienes-somos" onClick={closeMenu}>Quiénes somos</Link></li>
+              <li><Link href="/#quienes-somos" onClick={closeMenu}>Sangre Argentina</Link></li>
               <li><Link href="/#entrevistas" onClick={closeMenu}>Entrevistas</Link></li>
               <li><Link href="#contacto" onClick={closeMenu}>Contacto</Link></li>
             </ul>

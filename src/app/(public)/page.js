@@ -8,12 +8,12 @@ import RadioPlayer from '../../components/RadioPlayer/RadioPlayer';
 export const revalidate = 60; // Refrescar caché cada 60 segundos (ISR)
 
 export default async function Home() {
-  // Traer máximo 12 entrevistas reales de Supabase (solo los campos necesarios para la card)
+  // Traer máximo 6 entrevistas reales de Supabase (solo los campos necesarios para la card)
   const { data: entrevistas, error } = await supabase
     .from('entrevistas')
     .select('id, title, subtitle, image_url')
     .order('created_at', { ascending: false })
-    .limit(12);
+    .limit(6);
 
   const entrevistasList = entrevistas || [];
 
@@ -38,7 +38,7 @@ export default async function Home() {
       {/* SECCIÓN 2: QUIÉNES SOMOS */}
       <section id="quienes-somos" className={styles.quienesSomosSection}>
         <div className={styles.sectionHeader}>
-          <h2>Quiénes Somos</h2>
+          <h2>Sangre Argentina</h2>
         </div>
 
         <div className={styles.aboutContainer}>
@@ -124,8 +124,8 @@ export default async function Home() {
               </div>
             </div>
             
-            {/* Si hay 12, es muy probable que haya más en la base de datos, mostramos botón */}
-            {entrevistasList.length === 12 && (
+            {/* Si hay 6, es muy probable que haya más en la base de datos, mostramos botón */}
+            {entrevistasList.length === 6 && (
               <div style={{ textAlign: 'center', marginTop: '20px' }}>
                 <Link href="/entrevistas" className={styles.loadMoreBtn}>
                   Ver más entrevistas
