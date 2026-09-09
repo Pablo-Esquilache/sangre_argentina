@@ -74,29 +74,6 @@
   background-position: center;
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  position: relative;
-  overflow: hidden;
-}
-
-.bannerOverlay {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bannerLogo {
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  transition: transform 0.3s ease;
-}
-
-.bannerLogo:hover {
-  transform: scale(1.05);
 }
 
 /* QUIENES SOMOS */
@@ -320,13 +297,8 @@
     flex: 0 0 calc(85% - 7.5px);
     height: calc(85% - 7.5px);
     width: 100%;
-    border-radius: 12px;
+    border-radius: 12px; /* Devolvemos los bordes redondeados */
     border: 1px solid var(--border-color);
-  }
-
-  .bannerLogo {
-    width: 200px;
-    height: 200px;
   }
   
   .radioWrapper {

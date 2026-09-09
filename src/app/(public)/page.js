@@ -30,9 +30,7 @@ export default async function Home() {
           
           {/* Derecha (80%): Banner */}
           <div className={styles.bannerWrapper}>
-            <div className={styles.bannerOverlay}>
-              <img src="/logo_round.png" alt="Sangre Argentina" className={styles.bannerLogo} />
-            </div>
+             {/* La imagen generada por IA se mostrará como fondo mediante CSS */}
           </div>
         </div>
       </section>
