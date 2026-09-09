@@ -1,0 +1,74 @@
+.interviewMain {
+  padding-top: calc(var(--nav-height) + 20px); /* 20px exactos, igual que los H2 de la portada */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 30px; 
+}
+
+.headerRow h1 {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin: 0;
+  text-align: center;
+}
+
+.videoContainer {
+  width: 100%;
+  max-width: 1000px; 
+  max-height: 65vh; /* Tijeretazo adicional para asegurar que no pase del viewport */
+  margin: 10px auto 40px; 
+  aspect-ratio: 16/9;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+
+.iframePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 1.5rem;
+  border: 1px dashed #333;
+}
+
+.detailsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+@media (max-width: 768px) {
+  .headerRow {
+    margin-bottom: 20px; /* Un poco menos de espacio en celular */
+  }
+  
+  .headerRow h1 {
+    font-size: 1.5rem; /* Achicamos para que entre en una sola línea */
+  }
+}
+
+@media (max-width: 480px) {
+  .headerRow h1 {
+    font-size: 1.25rem; /* Aún más chico para celulares delgados */
+  }
+}

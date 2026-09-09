@@ -1,0 +1,138 @@
+.adminMain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 0 !important; /* Elimina el margen del navbar invisible */
+}
+
+.adminCard {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid var(--border-color);
+}
+
+.adminHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.adminHeader h2 {
+  margin-bottom: 0;
+}
+
+.logoutBtn {
+  background-color: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.adminCard h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.adminCard p {
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.formGroup {
+  margin-bottom: 20px; /* Aumentado de 15px a 20px */
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.formGroup input[type="url"],
+.formGroup input[type="email"],
+.formGroup input[type="text"],
+.formGroup input[type="password"],
+.formGroup textarea {
+  padding: 12px; /* Aumentado de 10px a 12px */
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  outline: none;
+  font-size: 1rem;
+}
+
+.formGroup input[type="url"]:focus,
+.formGroup input[type="email"]:focus,
+.formGroup input[type="text"]:focus,
+.formGroup input[type="password"]:focus,
+.formGroup textarea:focus {
+  border-color: var(--primary);
+}
+
+.formGroup input[type="file"] {
+  padding: 10px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.submitBtn:hover {
+  background-color: #a00000;
+}
+
+.errorText {
+  color: #ff4444;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.toggleAuthBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+  width: 100%;
+  text-align: center;
+}
+
+.toggleAuthBtn:hover {
+  color: var(--primary);
+}

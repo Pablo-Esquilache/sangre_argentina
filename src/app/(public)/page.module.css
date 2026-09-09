@@ -1,0 +1,297 @@
+.main {
+  width: 100%;
+}
+
+.sectionPortada {
+  height: 100vh;
+  width: 100%;
+  padding-top: var(--nav-height); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quienesSomosSection {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px; /* Reducido para que el contenido llegue más al borde */
+  display: flex;
+  flex-direction: column;
+}
+
+.entrevistasSection {
+  min-height: 100vh; /* Cambiado a min-height para evitar desbordes */
+  width: 100%;
+  padding-top: 20px; 
+  padding-bottom: 40px; /* Espacio para que no muerda el footer */
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHeader {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px; 
+  flex-shrink: 0;
+}
+
+.sectionHeader h2 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+/* PORTADA */
+.portadaContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  gap: 20px;
+}
+
+.radioWrapper {
+  flex: 0 0 20%; 
+  height: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.radioIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.bannerWrapper {
+  flex: 0 0 calc(80% - 20px);
+  height: 100%;
+  background-image: url('/banner_desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* QUIENES SOMOS */
+.aboutContainer {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+  padding: 0 40px; 
+  gap: 60px; 
+  max-width: 1200px; 
+  margin: 0 auto;
+}
+
+.aboutRow {
+  display: flex;
+  align-items: flex-start; 
+  gap: 50px;
+  width: 100%;
+}
+
+.reverseRow {
+  flex-direction: row-reverse; 
+}
+
+.aboutImageWrapper {
+  flex: 0 0 45%; 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.aboutImage {
+  width: 100%;
+  max-width: 450px; 
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.rodrigoImage {
+  width: 100%;
+  max-width: 300px; 
+  aspect-ratio: 1 / 1; 
+  object-fit: cover;
+  object-position: top; 
+  border-radius: 50%; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border: 5px solid var(--primary);
+}
+
+.aboutTextWrapper {
+  flex: 0 0 calc(55% - 50px); 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+}
+
+.aboutTextWrapper p {
+  font-size: 1.15rem; 
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ENTREVISTAS */
+.entrevistasContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1; /* Para que ocupe el espacio sin desbordar */
+  padding: 0 20px 20px 20px; 
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.entrevistasHeader {
+  text-align: center;
+  margin-bottom: 20px; 
+  flex-shrink: 0;
+}
+
+.entrevistasHeader h2 {
+  font-size: 3rem;
+  color: var(--primary);
+}
+
+.gridWrapper {
+  flex-grow: 1;
+  overflow: hidden; 
+  position: relative;
+  background-color: var(--bg-darker);
+  border-radius: 12px;
+  padding: 15px 10px 15px 15px; /* Reducido el padding superior e inferior */
+  border: 1px solid var(--border-color);
+  min-height: 400px; 
+}
+
+.gridScroll {
+  height: 100%;
+  overflow-y: auto; 
+  padding-right: 15px; 
+}
+
+.gridScroll::-webkit-scrollbar {
+  width: 8px;
+}
+.gridScroll::-webkit-scrollbar-track {
+  background: var(--bg-dark); 
+  border-radius: 10px;
+}
+.gridScroll::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+  border-radius: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 15px; 
+  padding-bottom: 15px; /* Reducido un poquito */
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  border-color: var(--secondary);
+}
+
+.thumbnailPlaceholder {
+  height: 90px; /* Aún más bajito para ganar espacio vertical */
+  background-color: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.cardContent {
+  padding: 10px 10px 8px 10px; /* Reducido el padding inferior de la tarjeta */
+}
+
+.cardContent h3 {
+  margin-bottom: 4px;
+  color: var(--text-main);
+  font-size: 1rem; /* Letra un poco más chica */
+}
+
+.cardContent p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+  .radioWrapper { flex: 0 0 30%; }
+  .bannerWrapper { flex: 0 0 calc(70% - 20px); }
+  .aboutImageWrapper { flex: 0 0 40%; }
+  .aboutTextWrapper { flex: 0 0 calc(60% - 40px); }
+}
+
+@media (max-width: 768px) {
+  .aboutRow {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .reverseRow {
+    flex-direction: column; /* Anula el row-reverse en celular */
+  }
+  .portadaContainer {
+    flex-direction: column-reverse; /* Banner arriba, radio abajo */
+    padding: 15px; /* Devolvemos el aire alrededor */
+    gap: 15px; /* Devolvemos el aire entre las cajas */
+  }
+  .aboutImageWrapper, .aboutTextWrapper {
+    flex: none;
+    width: 100%;
+  }
+  
+  /* Distribución 85/15 respetando los nuevos márgenes */
+  .bannerWrapper {
+    background-image: url('/banner_mobile.jpg');
+    flex: 0 0 calc(85% - 7.5px);
+    height: calc(85% - 7.5px);
+    width: 100%;
+    border-radius: 12px; /* Devolvemos los bordes redondeados */
+    border: 1px solid var(--border-color);
+  }
+  
+  .radioWrapper {
+    flex: 0 0 calc(15% - 7.5px);
+    height: calc(15% - 7.5px);
+    width: 100%;
+    border-radius: 12px; /* Devolvemos los bordes redondeados */
+    border: 1px solid #333;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .section100vh {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
