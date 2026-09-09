@@ -7,7 +7,7 @@ export default function Footer() {
         <div className={styles.info}>
           <h3>Sangre Argentina</h3>
           <p className={styles.quote}>
-            "Lo que pinta este pincel ni el tiempo lo ha de borrar, ninguno se ha de animar a corregirme la plana, no pinta quien tiene gana sino quien sabe pintar".
+            &ldquo;Lo que pinta este pincel ni el tiempo lo ha de borrar, ninguno se ha de animar a corregirme la plana, no pinta quien tiene gana sino quien sabe pintar&rdquo;.
           </p>
         </div>
         
