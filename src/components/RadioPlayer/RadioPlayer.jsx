@@ -8,9 +8,9 @@ export default function RadioPlayer() {
   const [error, setError] = useState(false);
   const audioRef = useRef(null);
 
-  // Intentaremos reproducir la URL directamente (agregando /; que es el truco para Shoutcast)
-  // Reemplazaremos http:// por https:// para probar si Shockmedia lo soporta nativamente.
-  const streamUrl = "https://streaming01.shockmedia.com.ar:8484/;";
+  // Hemos encontrado el puerto seguro que Shockmedia provee a la Municipalidad:
+  // Es el puerto 10458 con HTTPS.
+  const streamUrl = "https://streaming01.shockmedia.com.ar:10458/stream";
 
   const togglePlay = () => {
     if (!audioRef.current) return;
