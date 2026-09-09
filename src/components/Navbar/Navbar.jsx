@@ -2,12 +2,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const pathname = usePathname();
+  const router = useRouter();
   
   // Detectar si estamos en la página individual de una entrevista
   const isInterviewPage = pathname?.startsWith('/entrevistas/');
@@ -20,6 +22,16 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/?q=${encodeURIComponent(searchTerm.trim())}#entrevistas`);
+      closeMenu();
+    } else {
+      router.push(`/#entrevistas`);
+    }
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={`container ${styles.navContainer}`}>
@@ -28,9 +40,14 @@ export default function Navbar() {
           <Link href="/#inicio" className={styles.logoLink} onClick={closeMenu}>
             <Image src="/logo.png" alt="Logo Sangre Argentina" width={55} height={55} className={styles.logoImg} />
           </Link>
-          <div className={styles.search}>
-            <input type="text" placeholder="Buscar entrevistas..." />
-          </div>
+          <form className={styles.search} onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Buscar entrevistas..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
         </div>
 
         {isInterviewPage ? (

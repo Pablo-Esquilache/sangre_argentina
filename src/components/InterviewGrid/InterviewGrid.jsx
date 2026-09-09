@@ -2,10 +2,14 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import styles from './InterviewGrid.module.css';
 
 export default function InterviewGrid({ initialInterviews }) {
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('q') || '';
+
   const [interviews, setInterviews] = useState(initialInterviews || []);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,16 +18,22 @@ export default function InterviewGrid({ initialInterviews }) {
   const scrollRef = useRef(null);
   const itemsPerPage = 9;
 
-  const fetchInterviews = async (pageNumber) => {
+  const fetchInterviews = async (pageNumber, searchQuery = query) => {
     setIsLoading(true);
     const from = (pageNumber - 1) * itemsPerPage;
     const to = from + itemsPerPage - 1;
 
-    const { data, error } = await supabase
+    let request = supabase
       .from('entrevistas')
       .select('id, title, subtitle, image_url')
       .order('created_at', { ascending: false })
       .range(from, to);
+
+    if (searchQuery) {
+      request = request.ilike('title', `%${searchQuery}%`);
+    }
+
+    const { data, error } = await request;
 
     if (!error && data) {
       setInterviews(data);
@@ -31,6 +41,17 @@ export default function InterviewGrid({ initialInterviews }) {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (query) {
+      setPage(1);
+      fetchInterviews(1, query);
+    } else {
+      setInterviews(initialInterviews || []);
+      setPage(1);
+      setHasMore((initialInterviews || []).length === itemsPerPage);
+    }
+  }, [query, initialInterviews]);
 
   const handleNextPage = () => {
     const nextPage = page + 1;

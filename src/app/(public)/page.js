@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { supabase } from '../../lib/supabase';
@@ -94,7 +95,9 @@ export default async function Home() {
         </div>
         <div className={styles.entrevistasContainer}>
           
-          <InterviewGrid initialInterviews={entrevistasList} />
+          <Suspense fallback={<p style={{ textAlign: 'center', color: 'var(--text-main)' }}>Cargando grilla...</p>}>
+            <InterviewGrid initialInterviews={entrevistasList} />
+          </Suspense>
           
         </div>
       </section>
