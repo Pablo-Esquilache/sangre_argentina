@@ -80,10 +80,71 @@ export default function AdminPage() {
     }
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const handleSubmitInterview = async (e) => {
     e.preventDefault();
-    // Aquí irá la lógica de subida a Supabase (Storage + Insert en DB)
-    alert('Función de subida en construcción (Requiere crear columna subtitle en Supabase)');
+    
+    if (!optimizedImage) {
+      alert('Por favor selecciona y espera a que se optimice la imagen.');
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      // 1. Subir la imagen al bucket 'portadas'
+      const fileExt = optimizedImage.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('portadas')
+        .upload(fileName, optimizedImage);
+
+      if (uploadError) {
+        throw new Error('Error subiendo la imagen: ' + uploadError.message);
+      }
+
+      // 2. Obtener la URL pública de la imagen
+      const { data: publicUrlData } = supabase.storage
+        .from('portadas')
+        .getPublicUrl(fileName);
+      
+      const imageUrl = publicUrlData.publicUrl;
+
+      // 3. Guardar todos los datos en la tabla 'entrevistas'
+      const { data: insertData, error: insertError } = await supabase
+        .from('entrevistas')
+        .insert([
+          {
+            title: title,
+            subtitle: subtitle,
+            youtube_url: url,
+            description: description,
+            image_url: imageUrl,
+          }
+        ]);
+
+      if (insertError) {
+        throw new Error('Error guardando los datos en la base de datos: ' + insertError.message);
+      }
+
+      alert('¡Entrevista publicada con éxito!');
+      
+      // Limpiar el formulario
+      setTitle('');
+      setSubtitle('');
+      setUrl('');
+      setDescription('');
+      setOptimizedImage(null);
+      document.getElementById('image').value = '';
+      
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   if (!session) {
@@ -177,8 +238,8 @@ export default function AdminPage() {
             {optimizedImage && <small style={{color: 'var(--primary)', marginTop: '5px'}}>✅ Imagen optimizada lista para subir.</small>}
           </div>
 
-          <button type="submit" className={styles.submitBtn} disabled={isCompressing}>
-            {isCompressing ? 'Procesando...' : 'Publicar Entrevista'}
+          <button type="submit" className={styles.submitBtn} disabled={isCompressing || isUploading}>
+            {isUploading ? 'Subiendo entrevista a la nube...' : (isCompressing ? 'Procesando...' : 'Publicar Entrevista')}
           </button>
         </form>
       </div>
