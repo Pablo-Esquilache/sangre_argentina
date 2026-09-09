@@ -151,6 +151,9 @@ export default function AdminPage() {
     return (
       <main className={`container ${styles.adminMain}`}>
         <div className={styles.adminCard}>
+          <div style={{textAlign: 'center', marginBottom: '20px'}}>
+            <img src="/logo_round.png" alt="Sangre Argentina" style={{width: '100px', height: '100px', borderRadius: '50%'}} />
+          </div>
           <h2>Acceso Privado</h2>
           <p>{isRecovering ? 'Ingresa tu email para recuperar' : 'Ingresa tus credenciales para entrar al panel'}</p>
 
@@ -199,6 +202,9 @@ export default function AdminPage() {
   return (
     <main className={`container ${styles.adminMain}`}>
       <div className={styles.adminCard}>
+        <div style={{textAlign: 'center', marginBottom: '20px'}}>
+          <img src="/logo_round.png" alt="Sangre Argentina" style={{width: '100px', height: '100px', borderRadius: '50%'}} />
+        </div>
         <div className={styles.adminHeader}>
           <h2>Panel de Administración</h2>
           <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesión</button>
