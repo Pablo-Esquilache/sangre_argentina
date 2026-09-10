@@ -11,6 +11,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   
+  // No mostrar el navbar público en las rutas de login o admin
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/login')) {
+    return null;
+  }
+  
   // Detectar si estamos en la página individual de una entrevista
   const isInterviewPage = pathname?.startsWith('/entrevistas/');
 

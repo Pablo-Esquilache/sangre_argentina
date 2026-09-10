@@ -224,7 +224,12 @@ export default function AdminDashboard() {
       <div className={styles.adminContainer}>
         <div className={styles.adminHeader}>
           <h2>Panel de Administración</h2>
-          <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesión</button>
+          <div style={{ display: 'flex', gap: '15px' }}>
+            <button onClick={() => router.push('/')} className={styles.pageBtn} style={{ padding: '5px 10px', fontSize: '0.9rem' }}>
+              ← Volver a la Web
+            </button>
+            <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesión</button>
+          </div>
         </div>
 
         <div className={styles.adminGrid}>

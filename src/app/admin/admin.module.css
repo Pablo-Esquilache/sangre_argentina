@@ -34,7 +34,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 20px 40px;
+  padding: 30px 20px 40px;
   min-height: 100vh;
 }
 
@@ -42,15 +42,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
 }
 
 .adminHeader h2 {
   color: var(--primary);
   margin-bottom: 0;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .adminGrid {
