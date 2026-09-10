@@ -84,7 +84,7 @@ export default function LoginPage() {
           {recoveryMsg && <p style={{color: 'green', fontSize: '0.9rem', marginBottom: '10px'}}>{recoveryMsg}</p>}
           
           <button type="submit" className={styles.submitBtn} disabled={isLoading}>
-            {isLoading ? 'Cargando...' : (isRecovering ? 'Enviar link de recuperacin' : 'Ingresar')}
+            {isLoading ? 'Cargando...' : (isRecovering ? 'Enviar link de recuperación' : 'Ingresar')}
           </button>
         </form>
 
@@ -93,7 +93,7 @@ export default function LoginPage() {
           onClick={() => setIsRecovering(!isRecovering)}
           type="button"
         >
-          {isRecovering ? 'Volver al login' : 'OlvidǸ mi contrasea'}
+          {isRecovering ? 'Volver al login' : 'Olvidé mi contraseña'}
         </button>
       </div>
     </main>

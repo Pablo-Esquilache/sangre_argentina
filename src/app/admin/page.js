@@ -113,14 +113,14 @@ export default function AdminDashboard() {
     <main className={`container ${styles.adminMain}`}>
       <div className={styles.adminCard}>
         <div className={styles.adminHeader}>
-          <h2>Panel de Administracin</h2>
-          <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesin</button>
+          <h2>Panel de Administración</h2>
+          <button onClick={handleLogout} className={styles.logoutBtn}>Cerrar Sesión</button>
         </div>
         <p>Sube una nueva entrevista</p>
 
         <form className={styles.form} onSubmit={handleSubmitInterview}>
           <div className={styles.formGroup}>
-            <label htmlFor="title">Ttulo</label>
+            <label htmlFor="title">Título</label>
             <input type="text" id="title" value={title} onChange={e => setTitle(e.target.value)} placeholder="Ej: Especial Folklore Vivo" required />
           </div>
 
