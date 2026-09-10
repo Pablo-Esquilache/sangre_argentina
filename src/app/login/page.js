@@ -55,8 +55,8 @@ export default function LoginPage() {
     <main className={`container ${styles.loginMain}`}>
       <div className={styles.loginCard}>
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <button onClick={() => router.push('/')} className={styles.toggleAuthBtn} style={{ marginTop: 0 }}>
-            ← Volver a la Web
+          <button onClick={() => window.open('/', '_blank')} className={styles.toggleAuthBtn} style={{ marginTop: 0 }}>
+            Ir a la Web ↗
           </button>
         </div>
         <h2>Acceso Privado</h2>
