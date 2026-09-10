@@ -54,11 +54,6 @@ export default function LoginPage() {
   return (
     <main className={`container ${styles.loginMain}`}>
       <div className={styles.loginCard}>
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <button onClick={() => window.open('/', '_blank')} className={styles.toggleAuthBtn} style={{ marginTop: 0 }}>
-            Ir a la Web ↗
-          </button>
-        </div>
         <h2>Acceso Privado</h2>
         <p>{isRecovering ? 'Ingresa tu email para recuperar' : 'Ingresa tus credenciales para entrar al panel'}</p>
 
