@@ -1,18 +1,44 @@
-.adminMain {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.adminContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px 40px;
   min-height: 100vh;
-  padding-top: 0 !important; /* Elimina el margen del navbar invisible */
+}
+
+.adminHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.adminHeader h2 {
+  color: var(--primary);
+  margin-bottom: 0;
+  font-size: 1.8rem;
+}
+
+.adminGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* 40% / 60% */
+  gap: 30px;
+}
+
+@media (max-width: 900px) {
+  .adminGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .adminCard {
   background-color: var(--card-bg);
-  padding: 40px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   width: 100%;
-  max-width: 600px;
   border: 1px solid var(--border-color);
 }
 
@@ -135,4 +161,106 @@
 
 .toggleAuthBtn:hover {
   color: var(--primary);
+}
+
+/* Nuevos estilos para la lista */
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 700px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for list */
+.listContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.listContainer::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-radius: 4px;
+}
+.listContainer::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.listItem:hover {
+  border-color: var(--text-muted);
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemTitle {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+.itemMeta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.itemActions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  border-color: var(--text-main);
+  color: var(--text-main);
+}
+
+.actionBtn.delete:hover {
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+}
+
+.cancelBtn {
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
 }
