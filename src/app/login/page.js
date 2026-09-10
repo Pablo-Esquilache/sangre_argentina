@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase-client';
@@ -52,7 +52,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className={ + "" + container  + "$" + {styles.loginMain} + "" + }>
+    <main className={`container ${styles.loginMain}`}>
       <div className={styles.loginCard}>
         <h2>Acceso Privado</h2>
         <p>{isRecovering ? 'Ingresa tu email para recuperar' : 'Ingresa tus credenciales para entrar al panel'}</p>
