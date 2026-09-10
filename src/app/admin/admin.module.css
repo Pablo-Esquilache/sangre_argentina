@@ -23,7 +23,7 @@
 
 .adminGrid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* 40% / 60% */
+  grid-template-columns: 1.85fr 1fr; /* ~65% / 35% */
   gap: 30px;
 }
 
@@ -168,9 +168,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 700px;
-  overflow-y: auto;
-  padding-right: 10px;
 }
 
 /* Custom scrollbar for list */
@@ -263,4 +260,105 @@
 .cancelBtn:hover {
   background-color: var(--bg-dark);
   color: var(--text-main);
+}
+
+/* Modal de Previsualización */
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+  background: var(--bg-main);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: var(--primary);
+}
+
+.modalCloseBtn {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modalCloseBtn:hover {
+  color: #ff4444;
+}
+
+.previewIframe {
+  width: 100%;
+  flex: 1;
+  border: none;
+  background: white; /* Por si la pgina demora en cargar */
+}
+
+/* Paginación Admin */
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.pageBtn {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
