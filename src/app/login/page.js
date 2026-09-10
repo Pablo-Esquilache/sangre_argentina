@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase-client';
@@ -27,7 +27,7 @@ export default function LoginPage() {
     if (error) {
       setAuthError('Credenciales incorrectas');
     } else {
-      router.push('/admin'); // Redirigir al dashboard despuǸs de loguearse
+      router.push('/admin'); // Redirigir al dashboard después de loguearse
       router.refresh();
     }
   };
@@ -45,15 +45,15 @@ export default function LoginPage() {
     setIsLoading(false);
     
     if (error) {
-      setAuthError('Error al enviar el correo. Verifica tu direccin.');
+      setAuthError('Error al enviar el correo. Verifica tu dirección.');
     } else {
-      setRecoveryMsg('Revisa tu bandeja de entrada para restablecer tu contrasea.');
+      setRecoveryMsg('Revisa tu bandeja de entrada para restablecer tu contraseña.');
     }
   };
 
   return (
-    <main className={`container ${styles.adminMain}`}>
-      <div className={styles.adminCard}>
+    <main className={ + "" + container  + "$" + {styles.loginMain} + "" + }>
+      <div className={styles.loginCard}>
         <h2>Acceso Privado</h2>
         <p>{isRecovering ? 'Ingresa tu email para recuperar' : 'Ingresa tus credenciales para entrar al panel'}</p>
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
           <div className={styles.formGroup}>
             <input 
               type="email" 
-              placeholder="Correo electrnico" 
+              placeholder="Correo electrónico" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <div className={styles.formGroup}>
               <input 
                 type="password" 
-                placeholder="Contrasea" 
+                placeholder="Contraseña" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
