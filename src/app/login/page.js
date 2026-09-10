@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase-client';
+import { SITE_URL } from '@/lib/constants';
 import styles from '../admin/admin.module.css'; // Reutilizamos los estilos del admin
 import { useRouter } from 'next/navigation';
 
@@ -41,7 +42,9 @@ export default function LoginPage() {
       return;
     }
     setIsLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${SITE_URL}/login`,
+    });
     setIsLoading(false);
     
     if (error) {

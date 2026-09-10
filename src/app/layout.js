@@ -1,4 +1,5 @@
 import { Playfair_Display, Montserrat } from 'next/font/google';
+import { SITE_URL } from '../lib/constants';
 import './globals.css';
 
 const playfair = Playfair_Display({ 
@@ -12,7 +13,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://sangre-argentina.netlify.app'),
+  metadataBase: new URL(SITE_URL),
   title: 'Sangre Argentina | Radio Folclore Nacional',
   description: 'Escucha Sangre Argentina en vivo. El mejor Folclore Nacional, Tango y Cultura con la conducción de Rodrigo Migueles. Lunes a Viernes de 19:00 a 21:00 hs por AM 1250 y FM 98.7.',
   alternates: {

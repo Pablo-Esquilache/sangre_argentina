@@ -22,6 +22,7 @@ export default function AdminDashboard() {
   const [subtitle, setSubtitle] = useState('');
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
+  const [oldImageUrl, setOldImageUrl] = useState(null);
   
   const [isCompressing, setIsCompressing] = useState(false);
   const [optimizedImage, setOptimizedImage] = useState(null);
@@ -68,23 +69,20 @@ export default function AdminDashboard() {
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (!file) {
-      setOptimizedImage(null);
-      return;
-    }
+    if (!file) return;
 
     setIsCompressing(true);
     try {
       const options = {
-        maxSizeMB: 0.5,
+        maxSizeMB: 1,
         maxWidthOrHeight: 1200,
         useWebWorker: true,
       };
-      
       const compressedFile = await imageCompression(file, options);
       setOptimizedImage(compressedFile);
     } catch (error) {
-      console.error('Error optimizando la imagen:', error);
+      alert('Error optimizando la imagen');
+      console.error(error);
     } finally {
       setIsCompressing(false);
     }
@@ -96,6 +94,7 @@ export default function AdminDashboard() {
     setSubtitle('');
     setUrl('');
     setDescription('');
+    setOldImageUrl(null);
     setOptimizedImage(null);
     const fileInput = document.getElementById('image');
     if (fileInput) fileInput.value = '';
@@ -107,6 +106,7 @@ export default function AdminDashboard() {
     setSubtitle(interview.subtitle);
     setUrl(interview.youtube_url);
     setDescription(interview.description);
+    setOldImageUrl(interview.image_url);
     setOptimizedImage(null);
     const fileInput = document.getElementById('image');
     if (fileInput) fileInput.value = '';
@@ -115,12 +115,19 @@ export default function AdminDashboard() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = async (id, title) => {
+  const handleDelete = async (id, title, imageUrl) => {
     if (!window.confirm(`¿Estás seguro de que deseas eliminar la entrevista: "${title}"?`)) return;
 
     try {
       const { error } = await supabase.from('entrevistas').delete().eq('id', id);
       if (error) throw error;
+      
+      if (imageUrl) {
+        const fileName = imageUrl.split('/').pop();
+        if (fileName) {
+          await supabase.storage.from('portadas').remove([fileName]);
+        }
+      }
       
       alert('Entrevista eliminada correctamente.');
       if (editingId === id) resetForm();
@@ -184,6 +191,15 @@ export default function AdminDashboard() {
           .eq('id', editingId);
 
         if (updateError) throw new Error('Error actualizando: ' + updateError.message);
+        
+        // Borrar la imagen vieja si se subió una nueva exitosamente
+        if (imageUrl && oldImageUrl) {
+          const oldFileName = oldImageUrl.split('/').pop();
+          if (oldFileName) {
+            await supabase.storage.from('portadas').remove([oldFileName]);
+          }
+        }
+        
         alert('Entrevista actualizada con éxito!');
       } else {
         // INSERT
@@ -342,7 +358,7 @@ export default function AdminDashboard() {
                       </button>
                       
                       <button 
-                        onClick={() => handleDelete(interview.id, interview.title)}
+                        onClick={() => handleDelete(interview.id, interview.title, interview.image_url)}
                         className={`${styles.actionBtn} ${styles.delete}`} 
                         title="Eliminar"
                         aria-label="Eliminar"

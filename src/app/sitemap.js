@@ -1,7 +1,10 @@
 import { supabase } from '../lib/supabase';
+import { SITE_URL } from '../lib/constants';
+
+export const revalidate = 3600; // Refrescar sitemap cada hora
 
 export default async function sitemap() {
-  const baseUrl = 'https://sangre-argentina.netlify.app';
+  const baseUrl = SITE_URL;
 
   // Obtener todas las entrevistas para el sitemap
   const { data: entrevistas } = await supabase

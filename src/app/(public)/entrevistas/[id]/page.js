@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { supabase } from '../../../../lib/supabase';
+import { SITE_URL } from '../../../../lib/constants';
 import styles from './interview.module.css';
 
 // Función para transformar URL de YouTube a embed URL
@@ -21,16 +22,18 @@ export async function generateMetadata({ params }) {
     .single();
 
   if (!interview) return {};
+  
+  const shortDesc = interview.description ? interview.description.substring(0, 160) + '...' : '';
 
   return {
     title: `${interview.title} | Sangre Argentina`,
-    description: interview.description?.substring(0, 160) + '...',
+    description: shortDesc,
     alternates: {
       canonical: `/entrevistas/${params.id}`,
     },
     openGraph: {
       title: `${interview.title} | Entrevista exclusiva`,
-      description: interview.description?.substring(0, 160) + '...',
+      description: shortDesc,
       images: [
         {
           url: interview.image_url,
@@ -44,7 +47,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title: `${interview.title} | Sangre Argentina`,
-      description: interview.description?.substring(0, 160) + '...',
+      description: shortDesc,
       images: [interview.image_url],
     }
   };
@@ -80,7 +83,7 @@ export default async function InterviewDetail({ params }) {
     name: interview.title,
     description: interview.description,
     image: interview.image_url,
-    url: `https://sangre-argentina.netlify.app/entrevistas/${interview.id}`,
+    url: `${SITE_URL}/entrevistas/${interview.id}`,
     datePublished: interview.created_at,
     author: {
       '@type': 'Person',
@@ -91,7 +94,7 @@ export default async function InterviewDetail({ params }) {
       name: 'Sangre Argentina',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sangre-argentina.netlify.app/logo.png'
+        url: `${SITE_URL}/logo.png`
       }
     }
   };
