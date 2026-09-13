@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase-client';
-import { SITE_URL } from '@/lib/constants';
 import styles from '../admin/admin.module.css'; // Reutilizamos los estilos del admin
 import { useRouter } from 'next/navigation';
 
