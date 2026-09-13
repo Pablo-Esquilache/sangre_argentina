@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase-client';
 import { SITE_URL } from '@/lib/constants';
 import styles from '../admin/admin.module.css'; // Reutilizamos los estilos del admin
@@ -11,10 +11,29 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRecovering, setIsRecovering] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [authError, setAuthError] = useState('');
   const [recoveryMsg, setRecoveryMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Escuchar cambios de estado de autenticación (ej: cuando vuelve del link del correo)
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsUpdatingPassword(true);
+      }
+    });
+    
+    // Checkear si la URL trae un hash indicando recovery (por si falla el evento)
+    if (typeof window !== 'undefined' && window.location.hash.includes('type=recovery')) {
+      setIsUpdatingPassword(true);
+    }
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [supabase.auth]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,6 +72,61 @@ export default function LoginPage() {
       setRecoveryMsg('Revisa tu bandeja de entrada para restablecer tu contraseña.');
     }
   };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    setAuthError('');
+    setRecoveryMsg('');
+    
+    if (password.length < 6) {
+      setAuthError('La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+    
+    setIsLoading(true);
+    const { error } = await supabase.auth.updateUser({ password: password });
+    setIsLoading(false);
+    
+    if (error) {
+      setAuthError('Error al actualizar la contraseña: ' + error.message);
+    } else {
+      setRecoveryMsg('Contraseña actualizada con éxito. Redirigiendo al panel...');
+      setTimeout(() => {
+        router.push('/admin');
+        router.refresh();
+      }, 2000);
+    }
+  };
+
+  if (isUpdatingPassword) {
+    return (
+      <main className={`container ${styles.loginMain}`}>
+        <div className={styles.loginCard}>
+          <h2>Restablecer Contraseña</h2>
+          <p>Ingresa tu nueva contraseña para acceder al panel.</p>
+
+          <form className={styles.form} onSubmit={handleUpdatePassword}>
+            <div className={styles.formGroup}>
+              <input 
+                type="password" 
+                placeholder="Nueva Contraseña (mín. 6 caracteres)" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+            </div>
+            
+            {authError && <p className={styles.errorText}>{authError}</p>}
+            {recoveryMsg && <p style={{color: 'green', fontSize: '0.9rem', marginBottom: '10px'}}>{recoveryMsg}</p>}
+            
+            <button type="submit" className={styles.submitBtn} disabled={isLoading}>
+              {isLoading ? 'Actualizando...' : 'Guardar y Entrar'}
+            </button>
+          </form>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={`container ${styles.loginMain}`}>
