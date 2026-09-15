@@ -89,7 +89,7 @@
 
 .aboutRow {
   display: flex;
-  align-items: flex-start; 
+  align-items: center; 
   gap: 50px;
   width: 100%;
 }
@@ -102,12 +102,12 @@
   flex: 0 0 45%; 
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .aboutImage {
   width: 100%;
-  max-width: 450px; 
+  max-width: 550px; 
   height: auto;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
