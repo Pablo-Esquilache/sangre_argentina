@@ -71,9 +71,9 @@ export default async function Home() {
               <Image 
                 src="/rodrigo.jpg" 
                 alt="Rodrigo Migueles" 
-                width={400} 
+                width={600} 
                 height={400} 
-                className={styles.rodrigoImage}
+                className={styles.aboutImage}
               />
             </div>
             <div className={styles.aboutTextWrapper}>
