@@ -1,4 +1,5 @@
 import { Playfair_Display, Montserrat } from 'next/font/google';
+import Script from 'next/script';
 import { SITE_URL } from '../lib/constants';
 import './globals.css';
 
@@ -60,6 +61,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es" className={`${playfair.variable} ${montserrat.variable}`}>
       <body>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-JTVQ9135ZK"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-JTVQ9135ZK');
+          `}
+        </Script>
         {children}
       </body>
     </html>
